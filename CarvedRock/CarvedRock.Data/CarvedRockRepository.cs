@@ -9,11 +9,14 @@ namespace CarvedRock.Data
     {
         private readonly LocalContext _ctx;
         private readonly ILogger<CarvedRockRepository> _logger;
+        private readonly ILogger _factoryLogger;
 
-        public CarvedRockRepository(LocalContext ctx, ILogger<CarvedRockRepository> logger)
+        public CarvedRockRepository(LocalContext ctx, ILogger<CarvedRockRepository> logger,
+            ILoggerFactory loggerFactory)
         {
             _ctx = ctx;
             _logger = logger;
+            _factoryLogger = loggerFactory.CreateLogger("DataAccessLayer");
         }
         public async Task<List<Product>> GetProductsAsync(string category)
         {
@@ -40,6 +43,9 @@ namespace CarvedRock.Data
 
             _logger.LogDebug("Querrying products for {id} finished in {milliseconds} milliseconds",
                 id, timer.ElapsedMilliseconds);
+
+            _factoryLogger.LogInformation("(F) Querrying products for {id} finished in {ticks} ticks",
+                id, timer.ElapsedTicks);
 
             return product;
         }
