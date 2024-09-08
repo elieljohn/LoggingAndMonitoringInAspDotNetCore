@@ -1,8 +1,20 @@
 using System.Diagnostics;
 using CarvedRock.Data;
 using CarvedRock.Domain;
+using Hellang.Middleware.ProblemDetails;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddProblemDetails(opts =>
+{
+    opts.IncludeExceptionDetails = (ctx, ex) => false;
+    opts.OnBeforeWriteDetails = (ctx, details) =>
+    {
+        if (details.Status == 500)
+        {
+            details.Detail = "An error occurred in our API. Use the trace id when contacting us.";
+        }
+    };
+});
 //builder.Logging.AddFilter("CarvedRock", LogLevel.Debug);
 
 // var path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -22,6 +34,7 @@ builder.Services.AddDbContext<LocalContext>();
 builder.Services.AddScoped<ICarvedRockRepository, CarvedRockRepository>();
 
 var app = builder.Build();
+app.UseProblemDetails();
 
 using (var scope = app.Services.CreateScope())
 {
