@@ -6,15 +6,10 @@ namespace CarvedRock.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public partial class ProductController : ControllerBase
+public class ProductController : ControllerBase
 {
     private readonly ILogger<ProductController> _logger;
-    private readonly IProductLogic _productLogic;   
-
-    //[LoggerMessage(CarvedRockEvents.GettingProducts, LogLevel.Information, 
-    //    "SourceGenerated - Getting products in API.")]
-    [LoggerMessage(LogLevel.Information, "SourceGenerated - Getting products in API.")]
-    partial void LogGettingProducts(); 
+    private readonly IProductLogic _productLogic;
 
     public ProductController(ILogger<ProductController> logger, IProductLogic productLogic)
     {
@@ -25,13 +20,8 @@ public partial class ProductController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<Product>> Get(string category = "all")
     {
-        using (_logger.BeginScope("ScopeCat: {ScopeCat}", category))
-        {     
-            LogGettingProducts();       
-            //_logger.LogInformation(CarvedRockEvents.GettingProducts, "Getting products in API.");
-            return await _productLogic.GetProductsForCategoryAsync(category);
-        }
-        
+        _logger.LogInformation("Getting products in API for {category}", category);
+        return await _productLogic.GetProductsForCategoryAsync(category);
         //return _productLogic.GetProductsForCategory(category);
     }
 
@@ -40,9 +30,9 @@ public partial class ProductController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get(int id)
     {
+        //var product = await _productLogic.GetProductByIdAsync(id);
         _logger.LogDebug("Getting single product in API for {id}", id);
-        var product = await _productLogic.GetProductByIdAsync(id);
-        //var product = _productLogic.GetProductById(id);
+        var product = _productLogic.GetProductById(id);
         if (product != null)
         {
             return Ok(product);

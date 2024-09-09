@@ -20,7 +20,7 @@ namespace CarvedRock.Data
             _factoryLogger = loggerFactory.CreateLogger("DataAccessLayer");
         }
         public async Task<List<Product>> GetProductsAsync(string category)
-        {            
+        {
             _logger.LogInformation("Getting products in repository for {category}", category);
             if (category == "clothing")
             {
@@ -36,7 +36,7 @@ namespace CarvedRock.Data
             try
             {
                 return await _ctx.Products.Where(p => p.Category == category || category == "all").ToListAsync();
-            } 
+            }
             catch (Exception ex)
             {
                 var newEx = new ApplicationException("Something bad happened in database", ex);

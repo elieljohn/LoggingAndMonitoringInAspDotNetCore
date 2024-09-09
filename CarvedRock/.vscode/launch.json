@@ -9,13 +9,13 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-api",
-            "program": "${workspaceFolder}/CarvedRock.Api/bin/Debug/net8.0/CarvedRock.Api.dll",
+            "program": "${workspaceFolder}/CarvedRock.Api/bin/Debug/net6.0/CarvedRock.Api.dll",
             "args": [],
             "cwd": "${workspaceFolder}/CarvedRock.Api",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",                
-                "pattern": "Now listening on:\\s+(https?://\\S+)\"?"
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
             },           
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
@@ -30,13 +30,13 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-ui",
-            "program": "${workspaceFolder}/CarvedRock.WebApp/bin/Debug/net8.0/CarvedRock.WebApp.dll",
+            "program": "${workspaceFolder}/CarvedRock.WebApp/bin/Debug/net6.0/CarvedRock.WebApp.dll",
             "args": [],
             "cwd": "${workspaceFolder}/CarvedRock.WebApp",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",                
-                "pattern": "Now listening on:\\s+(https?://\\S+)\"?"
+                "pattern": "Now listening on:\\s+(https?://\\S+)"
             },           
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
