@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarvedRock.Data.Migrations
 {
     [DbContext(typeof(LocalContext))]
-    [Migration("20211218131519_Initial")]
+    [Migration("20230924152210_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,6 +29,10 @@ namespace CarvedRock.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImgUrl")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

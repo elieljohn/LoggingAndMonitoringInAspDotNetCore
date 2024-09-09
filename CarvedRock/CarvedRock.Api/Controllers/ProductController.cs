@@ -6,10 +6,15 @@ namespace CarvedRock.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ProductController : ControllerBase
+public partial class ProductController : ControllerBase
 {
     private readonly ILogger<ProductController> _logger;
-    private readonly IProductLogic _productLogic;
+    private readonly IProductLogic _productLogic;   
+
+    //[LoggerMessage(CarvedRockEvents.GettingProducts, LogLevel.Information, 
+    //    "SourceGenerated - Getting products in API.")]
+    [LoggerMessage(LogLevel.Information, "SourceGenerated - Getting products in API.")]
+    partial void LogGettingProducts(); 
 
     public ProductController(ILogger<ProductController> logger, IProductLogic productLogic)
     {
@@ -20,8 +25,13 @@ public class ProductController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<Product>> Get(string category = "all")
     {
-        _logger.LogInformation("Getting products in API for {category}", category);
-        return await _productLogic.GetProductsForCategoryAsync(category);
+        using (_logger.BeginScope("ScopeCat: {ScopeCat}", category))
+        {     
+            LogGettingProducts();       
+            //_logger.LogInformation(CarvedRockEvents.GettingProducts, "Getting products in API.");
+            return await _productLogic.GetProductsForCategoryAsync(category);
+        }
+        
         //return _productLogic.GetProductsForCategory(category);
     }
 
@@ -30,9 +40,9 @@ public class ProductController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get(int id)
     {
-        //var product = await _productLogic.GetProductByIdAsync(id);
         _logger.LogDebug("Getting single product in API for {id}", id);
-        var product = _productLogic.GetProductById(id);
+        var product = await _productLogic.GetProductByIdAsync(id);
+        //var product = _productLogic.GetProductById(id);
         if (product != null)
         {
             return Ok(product);
