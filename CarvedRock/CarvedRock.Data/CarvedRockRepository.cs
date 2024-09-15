@@ -36,7 +36,7 @@ namespace CarvedRock.Data
             try
             {
                 return await _ctx.Products.Where(p => p.Category == category || category == "all").ToListAsync();
-            }
+            } 
             catch (Exception ex)
             {
                 var newEx = new ApplicationException("Something bad happened in database", ex);
