@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace CarvedRock.Api;
 public class UserScopeMiddleware
 {
@@ -14,8 +16,13 @@ public class UserScopeMiddleware
     {
         if (context.User.Identity is { IsAuthenticated: true })
         {
-            var user = context.User;    
-            using (_logger.BeginScope("User:{user}", user.Identity.Name))
+            var user = context.User;
+            var pattern = @"(?<=[\w]{1})[\w-\._\+%]*(?=[\w]{1}@)";
+            var maskedUsername = Regex.Replace(user.Identity.Name??"", pattern, m => new string('*', m.Length));
+
+            var subjectId = user.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+
+            using (_logger.BeginScope("User:{user}, SubjectId:{subject}", maskedUsername, subjectId))
             {
                 await _next(context);    
             }
