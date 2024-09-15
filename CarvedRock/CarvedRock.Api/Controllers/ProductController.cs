@@ -20,12 +20,9 @@ public class ProductController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<Product>> Get(string category = "all")
     {
-        var userName = User.Identity?.IsAuthenticated??false ? User.Identity.Name : "";
-        using (_logger.BeginScope("ScopeUser: {ScopeUser}, ScopeCat: {ScopeCat}",
-            userName, category))
+        using (_logger.BeginScope("ScopeCat: {ScopeCat}", category))
         {
-            _logger.LogInformation(CarvedRockEvents.GettingProducts,
-                "Getting products in API for {category} and {user}", category, userName);
+            _logger.LogInformation(CarvedRockEvents.GettingProducts, "Getting products in API.");
             return await _productLogic.GetProductsForCategoryAsync(category);
         }
 
