@@ -49,8 +49,10 @@ namespace CarvedRock.WebApp.Pages
                   new ProblemDetails();
                 var traceId = details.Extensions["traceId"]?.ToString();
 
-                _logger.LogWarning("API failure: {fullPath} Response: {response}, Trace: {trace}",
-                  fullPath, (int) response.StatusCode, traceId);        
+                var userName = User.Identity?.IsAuthenticated ?? false? User.Identity.Name : "";
+
+                _logger.LogWarning("API failure: {fullPath} Response: {apiResponse}, Trace: {trace}, User: {user}",
+                  fullPath, (int) response.StatusCode, traceId, userName);        
 
                 throw new Exception("API call failed!");
             }

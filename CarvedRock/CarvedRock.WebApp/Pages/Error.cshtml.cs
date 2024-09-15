@@ -28,6 +28,8 @@ namespace CarvedRock.WebApp.Pages
             RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
             CurrentActivity = Activity.Current;
             TraceId = HttpContext.TraceIdentifier;
+            var userName = User.Identity?.IsAuthenticated ?? false? User.Identity.Name : "";
+            _logger.LogWarning("User {userName} experienced an error.", userName);
         }
     }
 }
