@@ -46,10 +46,10 @@ public class SwaggerOptions : IConfigureOptions<SwaggerGenOptions>
                 {
                     new OpenApiSecurityScheme
                     {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "oauth2"
+                        Reference = new OpenApiReference 
+                        { 
+                            Type = ReferenceType.SecurityScheme, 
+                            Id = "oauth2" 
                         }
                     },
                     oauthScopes.Keys.ToArray()

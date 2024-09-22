@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace CarvedRock.Api;
+namespace CarvedRock.WebApp;
 public class UserScopeMiddleware
 {
     private readonly RequestDelegate _next;
