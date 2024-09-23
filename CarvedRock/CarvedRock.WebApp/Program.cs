@@ -8,8 +8,8 @@ using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
-// builder.Logging.AddJsonConsole();
-// builder.Logging.AddDebug();
+//builder.Logging.AddJsonConsole();
+//builder.Services.AddApplicationInsightsTelemetry();
 
 // builder.Host.UseSerilog((context, loggerConfig) => {
 //     loggerConfig
