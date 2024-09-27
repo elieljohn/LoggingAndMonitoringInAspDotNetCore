@@ -47,6 +47,7 @@ builder.Services.AddAuthentication(options =>
     options.SaveTokens = true;
 });
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddHealthChecks();
 
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
@@ -66,5 +67,6 @@ app.UseMiddleware<UserScopeMiddleware>();
 app.UseAuthorization();
 
 app.MapRazorPages().RequireAuthorization();
+app.MapHealthChecks("health").AllowAnonymous();
 
 app.Run();
