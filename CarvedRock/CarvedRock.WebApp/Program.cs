@@ -8,15 +8,15 @@ using Serilog.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
-//builder.Logging.AddSimpleConsole();
-//builder.Services.AddApplicationInsightsTelemetry();
+builder.Logging.AddSimpleConsole();
+builder.Services.AddApplicationInsightsTelemetry();
 
-builder.Host.UseSerilog((context, loggerConfig) => {
-    loggerConfig
-    .WriteTo.Console()
-    .Enrich.WithExceptionDetails()
-    .WriteTo.Seq("http://localhost:5341");
-});
+// builder.Host.UseSerilog((context, loggerConfig) => {
+//     loggerConfig
+//     .WriteTo.Console()
+//     .Enrich.WithExceptionDetails()
+//     .WriteTo.Seq("http://localhost:5341");
+// });
 
 // NLog.LogManager.Setup().LoadConfigurationFromFile();
 // builder.Host.UseNLog();
