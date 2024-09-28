@@ -90,7 +90,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 app.MapFallback(() => Results.Redirect("/swagger"));
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseMiddleware<UserScopeMiddleware>();
 app.UseAuthorization();
