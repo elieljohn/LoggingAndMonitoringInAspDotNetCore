@@ -15,19 +15,19 @@ using Serilog.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
-//builder.Logging.AddSimpleConsole();
 // builder.Logging.AddDebug();
-//builder.Services.AddApplicationInsightsTelemetry();
+builder.Logging.AddSimpleConsole();
+builder.Services.AddApplicationInsightsTelemetry();
 
-builder.Host.UseSerilog((context, loggerConfig) => {
-    loggerConfig
-    .ReadFrom.Configuration(context.Configuration)
-    .WriteTo.Console()
-    .Enrich.WithExceptionDetails()
-    .Enrich.FromLogContext()
-    .Enrich.With<ActivityEnricher>()
-    .WriteTo.Seq("http://localhost:5341");
-});
+// builder.Host.UseSerilog((context, loggerConfig) => {
+//     loggerConfig
+//     .ReadFrom.Configuration(context.Configuration)
+//     .WriteTo.Console()
+//     .Enrich.WithExceptionDetails()
+//     .Enrich.FromLogContext()
+//     .Enrich.With<ActivityEnricher>()
+//     .WriteTo.Seq("http://localhost:5341");
+// });
 
 //NLog.LogManager.Setup().LoadConfigurationFromFile();
 //builder.Host.UseNLog();
