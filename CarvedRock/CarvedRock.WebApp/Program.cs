@@ -5,6 +5,7 @@ using CarvedRock.WebApp;
 // using NLog.Web;
 using Serilog;
 using Serilog.Exceptions;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
@@ -47,7 +48,8 @@ builder.Services.AddAuthentication(options =>
     options.SaveTokens = true;
 });
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecks()
+    .AddIdentityServer(new Uri("https://demo.duendesoftware.com"), failureStatus: HealthStatus.Degraded);
 
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
