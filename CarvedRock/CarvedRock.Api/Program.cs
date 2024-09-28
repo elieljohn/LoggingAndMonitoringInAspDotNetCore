@@ -12,6 +12,8 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Serilog;
 using Serilog.Enrichers.Span;
 using Serilog.Exceptions;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Resources;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
