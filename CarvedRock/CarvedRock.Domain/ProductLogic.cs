@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using CarvedRock.Data;
 using CarvedRock.Data.Entities;
 using Microsoft.Extensions.Logging;
@@ -17,6 +18,10 @@ public class ProductLogic : IProductLogic
     public async Task<IEnumerable<Product>> GetProductsForCategoryAsync(string category)
     {        
         _logger.LogInformation("Getting products in logic for {category}", category);
+
+        Activity.Current?.AddEvent(new ActivityEvent("Getting products from repository"));
+        var results = await _repo.GetProductsAsync(category);
+        Activity.Current?.AddEvent(new ActivityEvent("Retrieved products from repository"));
 
         return await _repo.GetProductsAsync(category);
     }
