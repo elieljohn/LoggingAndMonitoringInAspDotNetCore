@@ -14,9 +14,9 @@ using Serilog.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
-// builder.Logging.AddSimpleConsole();
+//builder.Logging.AddSimpleConsole();
 // builder.Logging.AddDebug();
-// builder.Services.AddApplicationInsightsTelemetry();
+//builder.Services.AddApplicationInsightsTelemetry();
 
 builder.Host.UseSerilog((context, loggerConfig) => {
     loggerConfig
@@ -26,8 +26,8 @@ builder.Host.UseSerilog((context, loggerConfig) => {
     .WriteTo.Seq("http://localhost:5341");
 });
 
-// NLog.LogManager.Setup().LoadConfigurationFromFile();
-// builder.Host.UseNLog();
+//NLog.LogManager.Setup().LoadConfigurationFromFile();
+//builder.Host.UseNLog();
 
 builder.Services.AddProblemDetails(opts => 
 {
@@ -91,7 +91,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 app.MapFallback(() => Results.Redirect("/swagger"));
-// app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseMiddleware<UserScopeMiddleware>();
 app.UseAuthorization();
