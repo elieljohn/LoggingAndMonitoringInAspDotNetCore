@@ -10,6 +10,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 // using NLog;
 // using NLog.Web;
 using Serilog;
+using Serilog.Enrichers.Span;
 using Serilog.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,8 @@ builder.Host.UseSerilog((context, loggerConfig) => {
     .ReadFrom.Configuration(context.Configuration)
     .WriteTo.Console()
     .Enrich.WithExceptionDetails()
+    .Enrich.FromLogContext()
+    .Enrich.With<ActivityEnricher>()
     .WriteTo.Seq("http://localhost:5341");
 });
 
